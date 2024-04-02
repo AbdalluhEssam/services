@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
@@ -179,7 +181,7 @@ class ProductDetails extends StatelessWidget {
                               controller.timeHour.text = formattedTime;
                               controller.update();
                             } else {
-                              print("Time is not selected");
+                              log("Time is not selected");
                             }
                           },
                           isNamber: false,
