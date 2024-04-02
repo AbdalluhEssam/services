@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:services/core/constant/color.dart';
 import 'package:services/core/services/services.dart';
+import 'package:services/data/model/itemsmodel.dart';
 import '../../core/class/statusrequest.dart';
 import '../../core/functions/handlingdatacontroller.dart';
 import '../../data/datasource/remote/cart_data.dart';
@@ -24,34 +27,29 @@ class ProductDetailsControllerImp extends ProductDetailsController {
   late String? username;
   late String? email;
   late String? address;
-  late String? nameProduct;
-  late String? imageProduct;
-  late String descProduct;
-  late int? idProduct;
-  late int? count;
-  late int? priceProduct;
   List cart = [];
   String? quantity = 1.toString();
 
   CardViewData cardAddData = CardViewData(Get.find());
+  EasyInfiniteDateTimelineController controller =EasyInfiniteDateTimelineController();
+  TextEditingController timeHour = TextEditingController();
+  DateTime? focusDate;
 
   @override
   initialData() {
+
     username = myServices.sharedPreferences.getString("username");
     email = myServices.sharedPreferences.getString("email");
     // idUser = myServices.sharedPreferences.getString("id");
   }
-
+  late ItemsModel itemsModel;
   @override
   void onInit() {
-    idProduct = Get.arguments['id'];
-    nameProduct = Get.arguments['name'];
-    imageProduct = Get.arguments['image'];
-    priceProduct = Get.arguments['price'];
-    descProduct = Get.arguments['desc'];
-    count = Get.arguments['count'];
-    getData();
+    focusDate = DateTime.now();
+    itemsModel = ItemsModel();
     initialData();
+    itemsModel = Get.arguments['itemsModel'];
+
     super.onInit();
   }
 
@@ -95,35 +93,18 @@ class ProductDetailsControllerImp extends ProductDetailsController {
 
   @override
   void dispose() {
-    idProduct = null;
-    nameProduct = null;
-    imageProduct = null;
-    priceProduct = null;
-    descProduct = '';
-    count = null;
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values); // to re-show bars
     super.dispose();
   }
 
   @override
   void onClose() {
-    idProduct = null;
-    nameProduct = null;
-    imageProduct = null;
-    priceProduct = null;
-    descProduct = '';
-    count = null;
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values); // to re-show bars
+
     super.onClose();
   }
 
-  @override
-  // TODO: implement onDelete
-  InternalFinalCallback<void> get onDelete {
-    idProduct = null;
-    nameProduct = null;
-    imageProduct = null;
-    priceProduct = null;
-    descProduct = '';
-    count = null;
-    return super.onDelete;
-  }
+
 }

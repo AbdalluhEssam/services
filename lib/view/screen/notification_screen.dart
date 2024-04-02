@@ -63,7 +63,7 @@ class NotificationScreen extends GetView<NotificationControllerImp> {
                                 ),
                               ),
                               Text(
-                                  Jiffy("${DateTime.parse(controller.notification[index].createAt!)}")
+                                  Jiffy.parse("${DateTime.parse(controller.notification[index].createAt!)}")
                                       .fromNow(),
                                   style: const TextStyle(fontSize: 9, color: AppColor.gray))
                             ],

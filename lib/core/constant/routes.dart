@@ -20,7 +20,7 @@ class AppRoute {
   static const String glusHome = "/glushome";
   static const String productView = "/productview";
   static const String productPage = "/productpage";
-  static const String productDetails = "/productdetalis";
+  static const String productDetails = "/productDetails";
   static const String glusDetails = "/glusdetalis";
   static const String aboutUs = "/aboutus";
   static const String helpPage = "/helppage";

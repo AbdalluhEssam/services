@@ -57,18 +57,10 @@ class ListProCatCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MyServices myServices = Get.find();
     return InkWell(
       onTap: () {
         Get.toNamed(AppRoute.productDetails, arguments: {
-          "id": int.parse(itemsModel.itemsId!),
-          "name": myServices.sharedPreferences.getString("lang") == "en"
-              ? itemsModel.itemsName
-              : itemsModel.itemsNameAr,
-          "image": itemsModel.itemsImage,
-          "desc": myServices.sharedPreferences.getString("lang") == "en"
-              ? itemsModel.itemsDesc
-              : itemsModel.itemsDescAr,
+          "itemsModel": itemsModel,
         });
       },
       child: Card(

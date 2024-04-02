@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:services/core/constant/color.dart';
-import 'package:services/core/constant/routes.dart';
+import 'package:services/core/functions/translatedordatabase.dart';
 import '../../../controller/home/productdetalis_controller.dart';
-import '../../../core/services/services.dart';
+import '../../../core/functions/validinput.dart';
 import '../../../likeapi.dart';
+import '../../widget/auth/customtextformauth.dart';
 
 class ProductDetails extends StatelessWidget {
   const ProductDetails({
@@ -15,156 +18,179 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MyServices myServices = Get.find();
-    ProductDetailsControllerImp controller =
-        Get.put(ProductDetailsControllerImp());
-    Size size = MediaQuery.of(context).size;
+    Get.put(ProductDetailsControllerImp());
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
-        appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: AppColor.kBackgroundColor),
-          backgroundColor: AppColor.kBackgroundColor,
-          actions: [
-            IconButton(
+        backgroundColor: AppColor.kBackgroundColor,
+        bottomNavigationBar: GetBuilder<ProductDetailsControllerImp>(
+          builder: (controller) => Container(
+            width: double.infinity,
+            // color: Colors.brown[200],
+            margin: const EdgeInsets.symmetric(horizontal: 70, vertical: 18),
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0)),
+              padding: const EdgeInsets.all(15),
+              color: AppColor.primaryColor,
               onPressed: () {
-                Get.toNamed(AppRoute.myHomePageCart);
+                controller.addCart(controller.itemsModel.itemsId.toString());
               },
-              icon: const Icon(Icons.shopping_cart),
-            )
-          ],
-        ),
-        backgroundColor: AppColor.bg,
-        bottomNavigationBar: controller.count == 0
-            ? Container(
-                color: AppColor.primaryColor,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-                // padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(
-                  "notavailable".tr,
-                  style: const TextStyle(
-                      color: AppColor.red,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              )
-            : Container(
-                width: double.infinity,
-                // color: Colors.brown[200],
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 70, vertical: 18),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
-                  padding: const EdgeInsets.all(15),
-                  color: AppColor.kSecondaryColor,
-                  onPressed: () {
-                    controller.addCart(controller.idProduct.toString());
-                  },
-                  textColor: Colors.white,
-                  child: Text("addcart".tr),
-                ),
+              textColor: Colors.white,
+              child: Text(
+                translateDataBase("احجز الان", "Book now"),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-        body: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 35),
-                  decoration: const BoxDecoration(
-                    color: AppColor.kBackgroundColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    ),
-                  ),
+            ),
+          ),
+        ),
+        body: GetBuilder<ProductDetailsControllerImp>(
+            builder: (controller) => SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center(
-                        child: ProductImage(
-                          size: size,
-                          image:
-                              "${AppLink.imageItems}/${controller.imageProduct}",
-                        ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(vertical: 20),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: const [
-                      //       ColorDot(
-                      //         fillColor: AppColor.kTextLightColor,
-                      //         isSelected: true,
-                      //       ),
-                      //       ColorDot(
-                      //         fillColor: Colors.blue,
-                      //         isSelected: false,
-                      //       ),
-                      //       ColorDot(
-                      //         fillColor: Colors.red,
-                      //         isSelected: false,
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20 / 2),
-                        child: Text(
-                          "${controller.nameProduct}",
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                      ),
-                      controller.priceProduct == 0
-                          ? Text(
-                              "priceglus".tr,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.kSecondaryColor,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            alignment: AlignmentDirectional.topStart,
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:
+                                    "${AppLink.imageItems}/${controller.itemsModel.itemsImage}",
+                                alignment: Alignment.center,
+                                width: Get.width,
+                                fit: BoxFit.cover,
                               ),
-                            )
-                          : Text(
-                              myServices.sharedPreferences.getString("lang") ==
-                                      "en"
-                                  ? "Price ${controller.priceProduct} EG"
-                                  : "السعر ${controller.priceProduct} جنية ",
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.kSecondaryColor,
+                              PositionedDirectional(
+                                start: 10,
+                                top: 20,
+                                child: IconButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_back_ios_new,
+                                      color: AppColor.primaryColor,
+                                      size: 30,
+                                    )),
                               ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20 / 2, horizontal: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${translateDataBase(controller.itemsModel.itemsNameAr, controller.itemsModel.itemsName)}",
+                                  style: Theme.of(context).textTheme.headline6,
+                                ),
+                                Text(
+                                  translateDataBase(
+                                      controller.itemsModel.categoriesNameAr,
+                                      controller.itemsModel.categoriesName),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        AppColor.primaryColor.withOpacity(0.8),
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                      const Divider(
+                        height: 1,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Text(
+                          translateDataBase(controller.itemsModel.itemsDescAr,
+                              controller.itemsModel.itemsDesc),
+                          style: const TextStyle(
+                            color: AppColor.black,
+                            fontSize: 15,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                      ),
+                      const SizedBox(height: 10,),
+                      EasyInfiniteDateTimeLine(
+                        locale: "${translateDataBase("ar", "en_US")}",
+                        controller: controller.controller,
+                        firstDate: DateTime(2024),
+                        focusDate: controller.focusDate,
+                        lastDate: DateTime(2030, 12, 31),
+                        activeColor: AppColor.primaryColor,
+                        onDateChange: (selectedDate) {
+                          controller.focusDate = selectedDate;
+                          controller.update();
+                        },
+                      ),
+                      const SizedBox(height: 10,),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomFormAuthDate(
+                          color: AppColor.black.withOpacity(0.1),
+                          hinttext: "Booking time",
+                          label: translateDataBase("وقت الحجز", "Booking time"),
+                          iconData: Icons.watch_later_outlined,
+                          mycontroller: controller.timeHour,
+                          valid: (val) {
+                            return validInput(val!, 5, 500, "Booking time");
+                          },
+                          onTapFull: () async {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: ThemeData(
+                                    useMaterial3: true,
+                                    primaryColor: AppColor.backgroundColor,
+                                  ),
+                                  child: child!,
+                                );
+                              },
+                            );
+                            if (pickedTime != null) {
+                              DateTime parsedTime = DateTime(
+                                  DateTime.now().year,
+                                  DateTime.now().month,
+                                  DateTime.now().day,
+                                  pickedTime.hour,
+                                  pickedTime.minute);
+                              String formattedTime =
+                              DateFormat.jm().format(parsedTime);
+                              controller.timeHour.text = formattedTime;
+                              controller.update();
+                            } else {
+                              print("Time is not selected");
+                            }
+                          },
+                          isNamber: false,
+                        ),
+                      ),
                       const SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                     ],
                   ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Text(
-                    controller.descProduct,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-              ],
-            )
-          ],
-        ));
+                )));
   }
 }
 
@@ -196,51 +222,6 @@ class ColorDot extends StatelessWidget {
           shape: BoxShape.circle,
           color: fillColor,
         ),
-      ),
-    );
-  }
-}
-
-class ProductImage extends StatelessWidget {
-  const ProductImage({
-    Key? key,
-    required this.size,
-    required this.image,
-  }) : super(key: key);
-
-  final Size size;
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: const EdgeInsets.only(bottom: 15, top: 15),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(200)),
-      height: size.width * 0.7,
-      child: Stack(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        alignment: Alignment.center,
-        children: [
-          Container(
-            height: size.width * 0.7,
-            width: size.width * 0.7,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-          ),
-          Positioned(
-            child: CachedNetworkImage(
-              imageUrl: image,
-              alignment: Alignment.center,
-              height: size.width * 0.62,
-              width: size.width * 0.62,
-              fit: BoxFit.cover,
-            ),
-          )
-        ],
       ),
     );
   }
