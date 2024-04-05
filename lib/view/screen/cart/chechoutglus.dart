@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:services/core/constant/color.dart';
+import 'package:services/core/functions/translatedordatabase.dart';
 import '../../../controller/cart/checkoutglus_controller.dart';
 import '../../../core/constant/routes.dart';
 import '../../widget/checkout/cardaddress.dart';
@@ -191,8 +193,7 @@ class CheckOutGlus extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
-                              controller.typesId! == "3"
-                                  ? Row(
+                             Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
@@ -201,38 +202,27 @@ class CheckOutGlus extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             // Text("delivery".tr),
-                                            Text("res".tr),
-                                            Text("room".tr),
-                                            Text("kitchen".tr),
-                                            Text("bathroom".tr),
-                                            Text("balconies".tr),
+                                            Text("${translateDataBase("اسمك العامل", "Working name")}"),
+                                            Text("${translateDataBase("نوع الخدمة", "Service type")}"),
+                                            Text("${translateDataBase("وقت الخدمة", "Service time")}"),
                                             // Text("total".tr),
                                           ],
                                         ),
                                         Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.end,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                              CrossAxisAlignment.end,
                                           children: [
                                             // Text("${controller.delivery}"),
-                                            Text("${controller.countR}"),
-                                            Text("${controller.count}"),
-                                            Text("${controller.countK}"),
-                                            Text("${controller.countB}"),
-                                            Text("${controller.countB}"),
+                                            Text("${translateDataBase(controller.itemsModel.itemsNameAr, controller.itemsModel.itemsName)}"),
+                                            Text("${translateDataBase(controller.itemsModel.categoriesNameAr, controller.itemsModel.categoriesName)}"),
+                                            Text("${DateFormat.yMMMEd().format(DateTime.parse(controller.focusDate!))} ${controller.timeHour}"),
                                             // Text("${controller.total} EG"),
                                           ],
                                         ),
                                       ],
                                     )
-                                  : Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text("total".tr),
-                                        Text("${controller.total}")
-                                      ],
-                                    ),
+
                             ],
                           ),
                         ),

@@ -33,6 +33,7 @@ class ProductDetailsControllerImp extends ProductDetailsController {
   CardViewData cardAddData = CardViewData(Get.find());
   EasyInfiniteDateTimelineController controller =EasyInfiniteDateTimelineController();
   TextEditingController timeHour = TextEditingController();
+  TextEditingController note = TextEditingController();
   DateTime? focusDate;
 
   @override

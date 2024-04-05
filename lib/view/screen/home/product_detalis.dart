@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:services/core/constant/color.dart';
+import 'package:services/core/constant/routes.dart';
 import 'package:services/core/functions/translatedordatabase.dart';
 import '../../../controller/home/productdetalis_controller.dart';
 import '../../../core/functions/validinput.dart';
@@ -36,7 +37,13 @@ class ProductDetails extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               color: AppColor.primaryColor,
               onPressed: () {
-                controller.addCart(controller.itemsModel.itemsId.toString());
+                // controller.addCart(controller.itemsModel.itemsId.toString());
+                Get.toNamed(AppRoute.checkOutGlus,arguments: {
+                  "itemsModel" : controller.itemsModel,
+                  "focusDate" : controller.focusDate,
+                  "timeHour" : controller.timeHour.text,
+                  "note" : controller.note.text,
+                });
               },
               textColor: Colors.white,
               child: Text(
@@ -130,7 +137,9 @@ class ProductDetails extends StatelessWidget {
                       const Divider(
                         height: 1,
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       EasyInfiniteDateTimeLine(
                         locale: "${translateDataBase("ar", "en_US")}",
                         controller: controller.controller,
@@ -143,7 +152,9 @@ class ProductDetails extends StatelessWidget {
                           controller.update();
                         },
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomFormAuthDate(
@@ -177,7 +188,7 @@ class ProductDetails extends StatelessWidget {
                                   pickedTime.hour,
                                   pickedTime.minute);
                               String formattedTime =
-                              DateFormat.jm().format(parsedTime);
+                                  DateFormat.jm().format(parsedTime);
                               controller.timeHour.text = formattedTime;
                               controller.update();
                             } else {
@@ -188,8 +199,22 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 10,
                       ),
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomFormAuth(
+                              hinttext:
+                                  "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
+                              label:
+                                  "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
+                              iconData: Icons.note_alt_outlined,
+                              mycontroller: controller.note,
+                              valid: (val) {
+                                return validInput(
+                                    val!, 5, 10000, "Write your details");
+                              },
+                              isNamber: false))
                     ],
                   ),
                 )));

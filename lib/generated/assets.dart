@@ -2,11 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String assetsImg = 'assets/img.png';
-  static const String assetsImg1 = 'assets/img_1.png';
-  static const String assetsImg2 = 'assets/img_2.png';
-  static const String assetsImg3 = 'assets/img_3.png';
-  static const String assetsImg4 = 'assets/img_4.png';
   static const String assetsMyFlutterApp = 'assets/MyFlutterApp.ttf';
   static const String cairoCairoBlack = 'assets/fonts/Cairo/Cairo-Black.ttf';
   static const String cairoCairoBold = 'assets/fonts/Cairo/Cairo-Bold.ttf';

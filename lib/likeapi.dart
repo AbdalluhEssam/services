@@ -58,5 +58,9 @@ class AppLink {
   static const String deleteFavorite    = "$serverLink/favorite/delete.php";
   static const String deleteEndFavorite = "$serverLink/favorite/deleteend.php";
   static const String viewFavorite      = "$serverLink/favorite/view.php";
+//================================== Booking ===============================//
+  static const String addBooking       = "$serverLink/booking/add.php";
+  static const String deleteBooking    = "$serverLink/booking/add.php";
+  static const String viewBooking      = "$serverLink/booking/view.php";
 //================================== END ===============================//
 }
