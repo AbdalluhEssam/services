@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_file.dart';
+import 'package:services/data/datasource/remote/cart_data.dart';
 import '../../core/class/statusrequest.dart';
 import '../../core/functions/handlingdatacontroller.dart';
 import '../../core/services/services.dart';
@@ -15,15 +16,10 @@ abstract class OrderViewGlusController extends GetxController {
 
 class OrderViewGlusControllerImp extends OrderViewGlusController {
   MyServices myServices = Get.find();
-  OrderGlusViewData orderGlusViewData = OrderGlusViewData(Get.find());
+  Booking booking = Booking(Get.find());
 
-  List orderGlus = [];
+  List bookings = [];
 
-  double get price => totalPrice;
-  double totalPrice = 0.0;
-
-  num get quantity => totalQuantity;
-  num totalQuantity = 0;
   late StatusRequest statusRequest;
   String? idUser;
   String? username;
@@ -48,21 +44,19 @@ class OrderViewGlusControllerImp extends OrderViewGlusController {
   @override
   Future getData() async {
     statusRequest = StatusRequest.loading;
-    var response = await orderGlusViewData.getData();
-    print(
-        "========================================================================$response");
+    var response = await booking.getData();
+    print("========================================================================$response");
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['status'] == "success") {
-        orderGlus.addAll(response['orderglus']);
+        bookings.addAll(response['booking']);
       } else {
         statusRequest = StatusRequest.failure;
       }
     } else {
       statusRequest = StatusRequest.serverFailure;
     }
-    print(
-        "==============================================================================${orderGlus.length}");
+
     update();
   }
 }

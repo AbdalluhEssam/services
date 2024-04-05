@@ -9,24 +9,25 @@ import 'package:intl/intl.dart';
 import 'package:services/core/constant/color.dart';
 import 'package:services/core/constant/routes.dart';
 import 'package:services/core/functions/translatedordatabase.dart';
+import '../../../controller/home/productdetalisTop_controller.dart';
 import '../../../controller/home/productdetalis_controller.dart';
 import '../../../core/functions/validinput.dart';
 import '../../../likeapi.dart';
 import '../../widget/auth/customtextformauth.dart';
 
-class ProductDetails extends StatelessWidget {
-  const ProductDetails({
+class ProductTopSellingDetails extends StatelessWidget {
+  const ProductTopSellingDetails({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProductDetailsControllerImp());
+    Get.put(ProductDetailsTopControllerImp());
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
     return Scaffold(
         backgroundColor: AppColor.kBackgroundColor,
-        bottomNavigationBar: GetBuilder<ProductDetailsControllerImp>(
+        bottomNavigationBar: GetBuilder<ProductDetailsTopControllerImp>(
           builder: (controller) => Container(
             width: double.infinity,
             // color: Colors.brown[200],
@@ -38,11 +39,11 @@ class ProductDetails extends StatelessWidget {
               color: AppColor.primaryColor,
               onPressed: () {
                 // controller.addCart(controller.itemsModel.itemsId.toString());
-                Get.toNamed(AppRoute.checkOutGlus, arguments: {
-                  "itemsModel": controller.itemsModel,
-                  "focusDate": controller.focusDate,
-                  "timeHour": controller.timeHour.text,
-                  "note": controller.note.text,
+                Get.toNamed(AppRoute.checkOutGlus,arguments: {
+                  "itemsModel" : controller.itemsModel,
+                  "focusDate" : controller.focusDate,
+                  "timeHour" : controller.timeHour.text,
+                  "note" : controller.note.text,
                 });
               },
               textColor: Colors.white,
@@ -54,7 +55,7 @@ class ProductDetails extends StatelessWidget {
             ),
           ),
         ),
-        body: GetBuilder<ProductDetailsControllerImp>(
+        body: GetBuilder<ProductDetailsTopControllerImp>(
             builder: (controller) => SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,18 +98,17 @@ class ProductDetails extends StatelessWidget {
                                   "${translateDataBase(controller.itemsModel.itemsNameAr, controller.itemsModel.itemsName)}",
                                   style: Theme.of(context).textTheme.headline6,
                                 ),
-                                if (controller.itemsModel.categoriesNameAr != null)
-                                  Text(
-                                    translateDataBase(
-                                        controller.itemsModel.categoriesNameAr,
-                                        controller.itemsModel.categoriesName),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.primaryColor
-                                          .withOpacity(0.8),
-                                    ),
-                                  ),
+                                // Text(
+                                //   translateDataBase(
+                                //       controller.itemsModel.categoriesNameAr,
+                                //       controller.itemsModel.categoriesName),
+                                //   style: TextStyle(
+                                //     fontSize: 14,
+                                //     fontWeight: FontWeight.bold,
+                                //     color:
+                                //         AppColor.primaryColor.withOpacity(0.8),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

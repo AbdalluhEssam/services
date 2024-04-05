@@ -21,6 +21,7 @@ class AppRoute {
   static const String productView = "/productview";
   static const String productPage = "/productpage";
   static const String productDetails = "/productDetails";
+  static const String productTopSellingDetails = "/ProductTopSellingDetails";
   static const String glusDetails = "/glusdetalis";
   static const String aboutUs = "/aboutus";
   static const String helpPage = "/helppage";
@@ -29,6 +30,7 @@ class AppRoute {
   static const String mySplashScreen = "/mysplashscreen";
   static const String checkOut = "/checkout";
   static const String checkOutGlus = "/checkoutglus";
+  static const String bookingView = "/BookingView";
   static const String order = "/order";
   static const String orderProduct = "/orderproduct";
   static const String orderGlus = "/orderglus";

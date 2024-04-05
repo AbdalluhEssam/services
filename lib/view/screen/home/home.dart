@@ -6,6 +6,7 @@ import 'package:services/controller/home/home_controller.dart';
 import 'package:services/core/class/handlingdataview.dart';
 import 'package:services/core/functions/translatedordatabase.dart';
 import 'package:services/view/screen/home/searchscreen.dart';
+import 'package:services/view/screen/home/topselling.dart';
 import 'package:services/view/widget/home/customtitlehome.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../core/constant/color.dart';
@@ -173,6 +174,8 @@ class _HomePageState extends State<HomePage> {
                             height: 10,
                           ),
                           CustomTitleHome(title: "${translateDataBase("الموصى بها بالنسبة لك", "Recomended for you")}"),
+                          if (controller.itemsTopSelling.isNotEmpty)
+                            const ItemsViewTopSelling(),
 
                         ])))));
   }
@@ -181,3 +184,9 @@ class _HomePageState extends State<HomePage> {
     await launchUrlString(url);
   }
 }
+
+
+
+
+
+

@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:services/controller/home/search_controller.dart';
 import 'package:services/core/constant/color.dart';
 import 'package:services/core/constant/routes.dart';
+import 'package:services/data/model/itemsmodel.dart';
 import 'package:services/likeapi.dart';
 import 'package:http/http.dart' as http;
 import '../../../controller/home/categoriespro_controller.dart';
 import '../../../core/class/statusrequest.dart';
+import '../../../core/functions/translatedordatabase.dart';
 import '../../../data/datasource/remote/homedata.dart';
 
 class SearchScreen extends SearchDelegate {
@@ -101,7 +103,7 @@ class SearchScreen extends SearchDelegate {
                             height: Get.width * 0.3,
                           )),
                       const SizedBox(
-                        width: 8,
+                        width: 20,
                       ),
                       Expanded(
                         flex: 2,
@@ -112,27 +114,29 @@ class SearchScreen extends SearchDelegate {
                               "${snapshot.data[i]['items_name_ar']}",
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
-                            Text(
-                              " السعر : ${snapshot.data[i]['items_price']}",
-                              style: const TextStyle(
-                                  color: AppColor.primaryColor, fontSize: 15),
+                            MaterialButton(minWidth: 350,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0)),
+                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                              color: AppColor.primaryColor,
+                              onPressed: () {
+                                // controller.addCart(controller.itemsModel.itemsId.toString());
+                                Get.toNamed(AppRoute.productDetails,arguments: {
+                                  "itemsModel" : ItemsModel.fromJson(snapshot.data[i]),
+                                });
+                              },
+                              textColor: Colors.white,
+                              child: Text(
+                                translateDataBase("احجز الان", "Book now"),
+                                style:
+                                const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Expanded(
-                          child: snapshot.data[i]['items_count'] == "0"
-                              ? Text("notavailable".tr,
-                                  style: const TextStyle(
-                                      color: AppColor.red, fontSize: 10))
-                              : IconButton(
-                                  onPressed: () {
-                                    CategoriesProControllerImp controller =
-                                        Get.put(CategoriesProControllerImp());
-                                    controller.addCart(
-                                        "${snapshot.data[i]['items_id']}");
-                                  },
-                                  icon: const Icon(Icons.add_shopping_cart)))
+
+
                     ],
                   ),
                 ),

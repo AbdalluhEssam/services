@@ -45,56 +45,19 @@ class PersonInformation extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: InkWell(
-                            onTap: () {},
-                            child: BuildHeader(
-                              name: "${controller.username}",
-                              email: "${controller.email}",
-                              size: size,
-                              onClicked: () {},
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //   builder: (context) => UserPage(
-                              //     name: name,
-                              //     image: image,
-                              //   ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            padding: const EdgeInsets.only(bottom: 3),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColor.primaryColor),
-                            child: InkWell(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.order);
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Lottie.asset("assets/lottie/order.json",
-                                        width: Get.width * 0.15,
-                                        fit: BoxFit.cover,
-                                        height: Get.width * 0.15),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Text("orders".tr,
-                                        style: const TextStyle(
-                                            color: AppColor.black)),
-                                  ],
-                                )),
-                          ),
-                        ),
-                      ],
+                    InkWell(
+                      onTap: () {},
+                      child: BuildHeader(
+                        name: "${controller.username}",
+                        email: "${controller.email}",
+                        size: size,
+                        onClicked: () {},
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => UserPage(
+                        //     name: name,
+                        //     image: image,
+                        //   ),
+                      ),
                     ),
                     const SizedBox(
                       height: 24,
@@ -110,20 +73,6 @@ class PersonInformation extends StatelessWidget {
                     const Divider(
                       color: Colors.white70,
                     ),
-                    buildMenuItem(
-                        icon: Icons.location_city,
-                        text: "country".tr,
-                        onClicked: () {
-                          // Get.toNamed(AppRoute.language);
-                          Fluttertoast.showToast(
-                              msg: "soon".tr,
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: AppColor.primaryColor,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        }),
                     buildMenuItem(
                         icon: Icons.language_rounded,
                         text: "language".tr,
@@ -147,12 +96,6 @@ class PersonInformation extends StatelessWidget {
                         text: "help".tr,
                         onClicked: () {
                           Get.toNamed(AppRoute.helpPage);
-                        }),
-                    buildMenuItem(
-                        icon: Icons.local_police_outlined,
-                        text: "policyReturn".tr,
-                        onClicked: () {
-                          Get.toNamed(AppRoute.policyReturn);
                         }),
                     const SizedBox(
                       height: 24,
@@ -211,7 +154,7 @@ class PersonInformation extends StatelessWidget {
                     const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text("Glu's Family | ©2022")],
+                      children: [Text("Abdo Eslam | ©2024")],
                     ),
                     const SizedBox(
                       height: 10,

@@ -27,18 +27,6 @@ class OrderGlusViewData {
     return response.fold((l) => l, (r) => r);
   }
 }
-class OrderDetViewData {
-  Crud crud;
-  MyServices myServices = Get.find();
-
-  OrderDetViewData(this.crud);
-  getData(String id) async {
-    var response = await crud.postData(AppLink.orderDetView, {
-      "order_id": id,
-    });
-    return response.fold((l) => l, (r) => r);
-  }
-}
 
 
 class CheckOutAddData {
@@ -52,27 +40,6 @@ class CheckOutAddData {
       "orders_coupon": ordersCoupon,
       "total_price" : total,
       "delivery" : delivery,
-    });
-    return response.fold((l) => l, (r) => r);
-  }
-}
-class CheckOutGlusAddData {
-  Crud crud;
-  MyServices myServices = Get.find();
-  CheckOutGlusAddData(this.crud);
-  postData(String total,String address, String countR,String count , String countK , String countB ,String count_balcony,String note,String id) async {
-    var response = await crud.postData(AppLink.checkOutGlusAdd, {
-      "users_id": myServices.sharedPreferences.getString("id").toString(),
-      "total_price_order" : total,
-      "address" : address,
-      "count_r": countR,
-      "count_room": count,
-      "count_k": countK,
-      "count_b": countB,
-      "count_balcony": count_balcony,
-      "note": note,
-      "g_id" : id
-
     });
     return response.fold((l) => l, (r) => r);
   }

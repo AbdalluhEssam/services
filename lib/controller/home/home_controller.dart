@@ -18,6 +18,7 @@ class HomeControllerImp extends HomeController {
   List categories = [];
   List items = [];
   List banner = [];
+  List itemsTopSelling = [];
   int? currentIndex;
 
   late StatusRequest statusRequest;
@@ -65,6 +66,7 @@ class HomeControllerImp extends HomeController {
         categories.addAll(response['categories']);
         items.addAll(response['items']);
         banner.addAll(response['banner']);
+        itemsTopSelling.addAll(response['itemstopselling']);
       } else {
         statusRequest = StatusRequest.failure;
       }

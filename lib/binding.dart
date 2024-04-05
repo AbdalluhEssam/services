@@ -6,7 +6,6 @@ import 'package:services/controller/home/home_controller.dart';
 import 'package:services/controller/home/itemshome_controller.dart';
 import 'package:services/core/class/crud.dart';
 import 'controller/auth/signup_controller.dart';
-import 'controller/cart/orderdet_controller.dart';
 import 'controller/home/personinformation_controller.dart';
 import 'controller/home/productdetalis_controller.dart';
 
@@ -22,6 +21,5 @@ class MyBinding extends Bindings {
     Get.lazyPut(() => CardViewControllerImp(), fenix: true);
     Get.lazyPut(() => CheckOutControllerImp());
     Get.lazyPut(() => CategoriesProControllerImp());
-    Get.lazyPut(() => OrderDetViewControllerImp());
   }
 }

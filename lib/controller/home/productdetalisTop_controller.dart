@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:services/core/constant/color.dart';
 import 'package:services/core/services/services.dart';
+import 'package:services/data/model/booking_model.dart';
 import 'package:services/data/model/itemsmodel.dart';
 import '../../core/class/statusrequest.dart';
 import '../../core/functions/handlingdatacontroller.dart';
@@ -12,7 +13,7 @@ import '../../data/datasource/remote/cart_data.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../cart/cardview_controller.dart';
 
-abstract class ProductDetailsController extends GetxController {
+abstract class ProductDetailsTopController extends GetxController {
   initialData();
 
   getData();
@@ -20,7 +21,7 @@ abstract class ProductDetailsController extends GetxController {
   addCart(String id);
 }
 
-class ProductDetailsControllerImp extends ProductDetailsController {
+class ProductDetailsTopControllerImp extends ProductDetailsTopController {
   MyServices myServices = Get.find();
   CardViewData cardViewData = CardViewData(Get.find());
   late StatusRequest statusRequest;
@@ -43,11 +44,11 @@ class ProductDetailsControllerImp extends ProductDetailsController {
     email = myServices.sharedPreferences.getString("email");
     // idUser = myServices.sharedPreferences.getString("id");
   }
-  late ItemsModel itemsModel;
+  late ItemsTopSellingModel itemsModel;
   @override
   void onInit() {
     focusDate = DateTime.now();
-    itemsModel = ItemsModel();
+    itemsModel = ItemsTopSellingModel();
     initialData();
     itemsModel = Get.arguments['itemsModel'];
     super.onInit();

@@ -6,7 +6,6 @@ import 'package:services/core/functions/translatedordatabase.dart';
 import '../../../controller/home/categoriespro_controller.dart';
 import '../../../core/class/handlingdataview.dart';
 import '../../../core/constant/routes.dart';
-import '../../../core/services/services.dart';
 import '../../../data/model/itemsmodel.dart';
 import '../../../likeapi.dart';
 
