@@ -37,13 +37,14 @@ class ProductDetails extends StatelessWidget {
               padding: const EdgeInsets.all(15),
               color: AppColor.primaryColor,
               onPressed: () {
-                // controller.addCart(controller.itemsModel.itemsId.toString());
-                Get.toNamed(AppRoute.checkOutGlus, arguments: {
-                  "itemsModel": controller.itemsModel,
-                  "focusDate": controller.focusDate,
-                  "timeHour": controller.timeHour.text,
-                  "note": controller.note.text,
-                });
+                if (controller.formState.currentState?.validate() == true) {
+                  Get.toNamed(AppRoute.checkOutGlus, arguments: {
+                    "itemsModel": controller.itemsModel,
+                    "focusDate": controller.focusDate,
+                    "timeHour": controller.timeHour.text,
+                    "note": controller.note.text,
+                  });
+                }
               },
               textColor: Colors.white,
               child: Text(
@@ -56,167 +57,171 @@ class ProductDetails extends StatelessWidget {
         ),
         body: GetBuilder<ProductDetailsControllerImp>(
             builder: (controller) => SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            alignment: AlignmentDirectional.topStart,
-                            children: [
-                              CachedNetworkImage(
-                                imageUrl:
-                                    "${AppLink.imageItems}/${controller.itemsModel.itemsImage}",
-                                alignment: Alignment.center,
-                                width: Get.width,
-                                fit: BoxFit.cover,
-                              ),
-                              PositionedDirectional(
-                                start: 10,
-                                top: 20,
-                                child: IconButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    icon: const Icon(
-                                      Icons.arrow_back_ios_new,
-                                      color: AppColor.primaryColor,
-                                      size: 30,
-                                    )),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20 / 2, horizontal: 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Form(
+                    key: controller.formState,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.topStart,
                               children: [
-                                Text(
-                                  "${translateDataBase(controller.itemsModel.itemsNameAr, controller.itemsModel.itemsName)}",
-                                  style: Theme.of(context).textTheme.headline6,
+                                CachedNetworkImage(
+                                  imageUrl:
+                                      "${AppLink.imageItems}/${controller.itemsModel.itemsImage}",
+                                  alignment: Alignment.center,
+                                  width: Get.width,
+                                  fit: BoxFit.cover,
                                 ),
-                                if (controller.itemsModel.categoriesNameAr != null)
-                                  Text(
-                                    translateDataBase(
-                                        controller.itemsModel.categoriesNameAr,
-                                        controller.itemsModel.categoriesName),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.primaryColor
-                                          .withOpacity(0.8),
-                                    ),
-                                  ),
+                                PositionedDirectional(
+                                  start: 10,
+                                  top: 20,
+                                  child: IconButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      icon: const Icon(
+                                        Icons.arrow_back_ios_new,
+                                        color: AppColor.primaryColor,
+                                        size: 30,
+                                      )),
+                                ),
                               ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                      const Divider(
-                        height: 1,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Text(
-                          translateDataBase(controller.itemsModel.itemsDescAr,
-                              controller.itemsModel.itemsDesc),
-                          style: const TextStyle(
-                            color: AppColor.black,
-                            fontSize: 15,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                      const Divider(
-                        height: 1,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      EasyInfiniteDateTimeLine(
-                        locale: "${translateDataBase("ar", "en_US")}",
-                        controller: controller.controller,
-                        firstDate: DateTime(2024),
-                        focusDate: controller.focusDate,
-                        lastDate: DateTime(2030, 12, 31),
-                        activeColor: AppColor.primaryColor,
-                        onDateChange: (selectedDate) {
-                          controller.focusDate = selectedDate;
-                          controller.update();
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomFormAuthDate(
-                          color: AppColor.black.withOpacity(0.1),
-                          hinttext: "Booking time",
-                          label: translateDataBase("وقت الحجز", "Booking time"),
-                          iconData: Icons.watch_later_outlined,
-                          mycontroller: controller.timeHour,
-                          valid: (val) {
-                            return validInput(val!, 5, 500, "Booking time");
-                          },
-                          onTapFull: () async {
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.now(),
-                              builder: (context, child) {
-                                return Theme(
-                                  data: ThemeData(
-                                    useMaterial3: true,
-                                    primaryColor: AppColor.backgroundColor,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20 / 2, horizontal: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${translateDataBase(controller.itemsModel.itemsNameAr, controller.itemsModel.itemsName)}",
+                                    style: Theme.of(context).textTheme.headline6,
                                   ),
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (pickedTime != null) {
-                              DateTime parsedTime = DateTime(
-                                  DateTime.now().year,
-                                  DateTime.now().month,
-                                  DateTime.now().day,
-                                  pickedTime.hour,
-                                  pickedTime.minute);
-                              String formattedTime =
-                                  DateFormat.jm().format(parsedTime);
-                              controller.timeHour.text = formattedTime;
-                              controller.update();
-                            } else {
-                              log("Time is not selected");
-                            }
-                          },
-                          isNamber: false,
+                                  if (controller.itemsModel.categoriesNameAr !=
+                                      null)
+                                    Text(
+                                      translateDataBase(
+                                          controller.itemsModel.categoriesNameAr,
+                                          controller.itemsModel.categoriesName),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.primaryColor
+                                            .withOpacity(0.8),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
+                        const Divider(
+                          height: 1,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Text(
+                            translateDataBase(controller.itemsModel.itemsDescAr,
+                                controller.itemsModel.itemsDesc),
+                            style: const TextStyle(
+                              color: AppColor.black,
+                              fontSize: 15,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        const Divider(
+                          height: 1,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        EasyInfiniteDateTimeLine(
+                          locale: "${translateDataBase("ar", "en_US")}",
+                          controller: controller.controller,
+                          firstDate: DateTime(2024),
+                          focusDate: controller.focusDate,
+                          lastDate: DateTime(2030, 12, 31),
+                          activeColor: AppColor.primaryColor,
+                          onDateChange: (selectedDate) {
+                            controller.focusDate = selectedDate;
+                            controller.update();
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CustomFormAuth(
-                              hinttext:
-                                  "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
-                              label:
-                                  "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
-                              iconData: Icons.note_alt_outlined,
-                              mycontroller: controller.note,
-                              valid: (val) {
-                                return validInput(
-                                    val!, 5, 10000, "Write your details");
-                              },
-                              isNamber: false))
-                    ],
+                          child: CustomFormAuthDate(
+                            color: AppColor.black.withOpacity(0.1),
+                            hinttext: "Booking time",
+                            label: translateDataBase("وقت الحجز", "Booking time"),
+                            iconData: Icons.watch_later_outlined,
+                            mycontroller: controller.timeHour,
+                            valid: (val) {
+                              return validInput(val!, 5, 500, "Booking time");
+                            },
+                            onTapFull: () async {
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: ThemeData(
+                                      useMaterial3: true,
+                                      primaryColor: AppColor.backgroundColor,
+                                    ),
+                                    child: child!,
+                                  );
+                                },
+                              );
+                              if (pickedTime != null) {
+                                DateTime parsedTime = DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day,
+                                    pickedTime.hour,
+                                    pickedTime.minute);
+                                String formattedTime =
+                                    DateFormat.jm().format(parsedTime);
+                                controller.timeHour.text = formattedTime;
+                                controller.update();
+                              } else {
+                                log("Time is not selected");
+                              }
+                            },
+                            isNamber: false,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomFormAuth(
+                                hinttext:
+                                    "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
+                                label:
+                                    "${translateDataBase("اكتب تفاصيل طلبك", "Write your details")}",
+                                iconData: Icons.note_alt_outlined,
+                                mycontroller: controller.note,
+                                valid: (val) {
+                                  return validInput(
+                                      val!, 5, 10000, "Write your details");
+                                },
+                                isNamber: false))
+                      ],
+                    ),
                   ),
                 )));
   }

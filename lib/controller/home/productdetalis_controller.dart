@@ -36,6 +36,9 @@ class ProductDetailsControllerImp extends ProductDetailsController {
   TextEditingController note = TextEditingController();
   DateTime? focusDate;
 
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
+
   @override
   initialData() {
 
