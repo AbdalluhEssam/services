@@ -60,8 +60,8 @@ class LoginControllerImp extends LoginController {
       if (StatusRequest.success == statusRequest) {
         if (response['status'] == "success") {
           if (response['data']['users_approve'] == "1") {
-            myServices.sharedPreferences
-                .setString("id", response['data']['users_id'].toString());
+            myServices.sharedPreferences.setString("id", response['data']['users_id'].toString());
+            myServices.sharedPreferences.setString("admin", response['data']['admin'].toString());
             myServices.sharedPreferences
                 .setString("username", response['data']['users_name']);
             myServices.sharedPreferences
@@ -69,7 +69,7 @@ class LoginControllerImp extends LoginController {
             myServices.sharedPreferences
                 .setString("phone", response['data']['users_phone']);
             myServices.sharedPreferences.setString("step", "2");
-            Get.offNamed(AppRoute.myHomePage);
+
             Get.snackbar(
                 "${myServices.sharedPreferences.getString("username")} ",
                 "signupmass".tr,
